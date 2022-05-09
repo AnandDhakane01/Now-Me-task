@@ -5,6 +5,7 @@ import "reflect-metadata";
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const indexRouter = require("./routes/index_routes");
 
 const port = 5000;
 const app: Application = express();
@@ -15,9 +16,7 @@ app.use(express.json());
 app.use(cors("*"));
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", (req: Request, res: Response) => {
-  res.send("Hello World");
-});
+app.use("/", indexRouter);
 
 // DB connection
 const AppDataSource = new DataSource(config);
@@ -34,3 +33,5 @@ try {
 } catch (error: any) {
   console.error(`Error occured: ${error.message}`);
 }
+
+export default AppDataSource;
