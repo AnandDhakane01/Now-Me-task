@@ -6,6 +6,14 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index_routes");
+const winston = require("winston");
+
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
+});
 
 const port = 5000;
 const app: Application = express();

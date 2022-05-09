@@ -6,6 +6,7 @@ import {
   ManyToOne,
   BaseEntity,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { Posts_To_Replies } from "./posts_to_replies";
 import { Users } from "./users";
@@ -18,7 +19,10 @@ export class Posts extends BaseEntity {
   @Column()
   thought!: string;
 
+  @Column()
+  userId!: number;
   @ManyToOne((type) => Users, (user) => user.posts)
+  @JoinColumn({ name: "userId" })
   user!: Users;
 
   @OneToMany((type) => Posts_To_Replies, (replies) => replies.post)
