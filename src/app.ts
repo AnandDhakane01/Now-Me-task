@@ -1,14 +1,15 @@
-import express, { Application, Request, Response } from "express";
+import { Application, Request, Response } from "express";
 import { DataSource } from "typeorm";
 import config from "./db/config";
-const cors = require("cors");
-var bodyParser = require("body-parser");
 import "reflect-metadata";
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const port = 5000;
 const app: Application = express();
 
-// Body parsing Middleware
+// Middlewares
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors("*"));

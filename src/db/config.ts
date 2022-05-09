@@ -1,4 +1,7 @@
 import { DataSourceOptions } from "typeorm";
+import { Posts } from "../entities/posts";
+import { Posts_To_Replies } from "../entities/posts_to_replies";
+import { Users } from "../entities/users";
 require("dotenv").config();
 
 export default {
@@ -11,7 +14,7 @@ export default {
   // migrationsRun: true,
   dropSchema: false,
   logging: true,
-  entities: [],
+  entities: [Users, Posts, Posts_To_Replies],
   migrations: [],
   // cli: {
   //   entitiesDir: path.join(__dirname, "..", "entities"),
