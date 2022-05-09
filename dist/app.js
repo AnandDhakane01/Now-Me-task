@@ -12,21 +12,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors = require("cors");
-var bodyParser = require("body-parser");
-const indexRouter = require("./routes/index");
+const typeorm_1 = require("typeorm");
+const config_1 = __importDefault(require("./db/config"));
 require("reflect-metadata");
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const indexRouter = require("./routes/index_routes");
 const port = 5000;
-const app = (0, express_1.default)();
-// Body parsing Middleware
+const app = express();
+// Middlewares
 app.use(bodyParser.json());
-app.use(express_1.default.json());
+app.use(express.json());
 app.use(cors("*"));
-app.use(express_1.default.urlencoded({ extended: true }));
-app.use("/", (req, res) => {
-    res.send("Hello World");
-});
+app.use(express.urlencoded({ extended: true }));
+app.use("/", indexRouter);
+// DB connection
+const AppDataSource = new typeorm_1.DataSource(config_1.default);
+(() => __awaiter(void 0, void 0, void 0, function* () {
+    yield AppDataSource.initialize();
+    console.log("connected to DB!");
+}))();
 try {
     app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
         console.log(`Server is running on port ${port}!!`);
@@ -35,3 +41,4 @@ try {
 catch (error) {
     console.error(`Error occured: ${error.message}`);
 }
+exports.default = AppDataSource;
