@@ -166,4 +166,63 @@ const get_replies_for_post = async (req: Request, res: Response) => {
   return res.json(result);
 };
 
-module.exports = { post, reply, get_all_posts, get_replies_for_post };
+const get_posts_by_user_id = async (req: Request, res: Response) => {
+  const user_id: number = Number(req.params.user_id);
+  try {
+    const all_posts = await AppDataSource.createQueryBuilder()
+      .select("post")
+      .from(Posts, "post")
+      .where("post.userId = :userId AND post.is_base =  :is_base", {
+        userId: user_id,
+        is_base: true,
+      })
+      .getMany();
+    return res.json(all_posts);
+  } catch (err: any) {
+    console.error(err);
+    return res.json({ message: err.message });
+  }
+};
+
+const delete_post = async (req: Request, res: Response) => {
+  const post_id: number = Number(req.params.post_id);
+  // check if the user deleting is deleting his own post
+  const check: null | Posts = await AppDataSource.createQueryBuilder()
+    .select("post")
+    .from(Posts, "post")
+    .where("id = :id", { id: post_id })
+    .getOne();
+  // delete post
+  if (check && check.userId != req.user.id) {
+    return res.json({ message: "You are not authorized to delete this post" });
+  }
+
+  try {
+    // delete post to replies relation
+    await AppDataSource.createQueryBuilder()
+      .delete()
+      .from(Posts_To_Replies)
+      .where("postId = :postId", { postId: post_id })
+      .execute();
+
+    // delete the post
+    await AppDataSource.createQueryBuilder()
+      .delete()
+      .from(Posts)
+      .where("id = :id", { id: post_id })
+      .execute();
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (err: any) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = {
+  post,
+  reply,
+  get_all_posts,
+  get_replies_for_post,
+  get_posts_by_user_id,
+  delete_post,
+};
