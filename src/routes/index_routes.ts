@@ -18,7 +18,7 @@ const login_required = require("../middlewares/login_required");
 const router = express.Router();
 
 // auth
-router.post("/register", registerInitialChecks, register);
+router.post("/signup", registerInitialChecks, register);
 router.post("/login", loginInitialChecks, login);
 
 // posts [get]

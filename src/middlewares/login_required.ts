@@ -22,6 +22,7 @@ const login_required = async (
           .status(401)
           .json({ error: true, message: "Access denied. Invalid token." });
       }
+      // also need to check if the user exists in the DB
       req.user = value;
       console.log(req.user);
       next();
