@@ -19,11 +19,15 @@ __decorate([
     __metadata("design:type", Number)
 ], Posts_To_Replies.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)((type) => posts_1.Posts, (post) => post.replies),
-    __metadata("design:type", posts_1.Posts)
-], Posts_To_Replies.prototype, "post", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Posts_To_Replies.prototype, "postId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)((type) => posts_1.Posts, (post) => post.replies),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Posts_To_Replies.prototype, "replyId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)((type) => posts_1.Posts, (rep) => rep.replies, { onDelete: "CASCADE" }),
     __metadata("design:type", posts_1.Posts)
 ], Posts_To_Replies.prototype, "reply", void 0);
 Posts_To_Replies = __decorate([

@@ -24,13 +24,26 @@ __decorate([
     __metadata("design:type", String)
 ], Posts.prototype, "thought", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)((type) => users_1.Users, (user) => user.posts),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Posts.prototype, "userId", void 0);
+__decorate([
+    (0, typeorm_1.JoinColumn)(),
+    (0, typeorm_1.ManyToOne)(() => users_1.Users, (user) => user.posts, { onDelete: "CASCADE" }),
     __metadata("design:type", users_1.Users)
 ], Posts.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)((type) => posts_to_replies_1.Posts_To_Replies, (replies) => replies.post),
+    (0, typeorm_1.OneToMany)((type) => posts_to_replies_1.Posts_To_Replies, (rep) => rep.replyId),
     __metadata("design:type", Array)
 ], Posts.prototype, "replies", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Posts.prototype, "is_base", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Posts.prototype, "anonymous", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
