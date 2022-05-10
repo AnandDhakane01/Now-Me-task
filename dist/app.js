@@ -41,7 +41,7 @@ const AppDataSource = new typeorm_1.DataSource(config_1.default);
     console.log("connected to DB!");
 }))();
 try {
-    app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
+    app.listen(process.env.PORT || port, () => __awaiter(void 0, void 0, void 0, function* () {
         console.log(`Server is running on port ${port}!!`);
     }));
 }

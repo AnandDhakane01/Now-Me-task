@@ -35,7 +35,7 @@ const AppDataSource = new DataSource(config);
 })();
 
 try {
-  app.listen(port, async () => {
+  app.listen(process.env.PORT || port, async () => {
     console.log(`Server is running on port ${port}!!`);
   });
 } catch (error: any) {
