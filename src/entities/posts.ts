@@ -21,12 +21,18 @@ export class Posts extends BaseEntity {
 
   @Column()
   userId!: number;
-  @ManyToOne((type) => Users, (user) => user.posts)
-  @JoinColumn({ name: "userId" })
+  @JoinColumn()
+  @ManyToOne(() => Users, (user) => user.posts, { onDelete: "CASCADE" })
   user!: Users;
 
-  @OneToMany((type) => Posts_To_Replies, (replies) => replies.post)
+  @OneToMany((type) => Posts_To_Replies, (rep) => rep.replyId)
   replies!: Posts_To_Replies[];
+
+  @Column()
+  is_base!: boolean;
+
+  @Column()
+  anonymous!: boolean;
 
   @CreateDateColumn()
   createdAt!: Date;

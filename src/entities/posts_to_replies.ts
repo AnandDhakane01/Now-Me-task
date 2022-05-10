@@ -15,13 +15,9 @@ export class Posts_To_Replies extends BaseEntity {
 
   @Column()
   postId!: number;
-  @ManyToOne((type) => Posts, (post) => post.replies)
-  @JoinColumn({ name: "postId" })
-  post!: Posts;
 
   @Column()
   replyId!: number;
-  @ManyToOne((type) => Posts, (post) => post.replies)
-  @JoinColumn({ name: "replyId" })
+  @ManyToOne((type) => Posts, (rep) => rep.replies, { onDelete: "CASCADE" })
   reply!: Posts;
 }

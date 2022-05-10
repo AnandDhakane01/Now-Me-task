@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 import { Request, Response, NextFunction } from "express";
 
-const loginRequired = async (
+const login_required = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -29,4 +29,4 @@ const loginRequired = async (
   }
 };
 
-module.exports = loginRequired;
+module.exports = login_required;

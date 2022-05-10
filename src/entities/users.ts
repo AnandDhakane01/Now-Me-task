@@ -23,7 +23,8 @@ export class Users extends BaseEntity {
   @Column()
   email!: string;
 
-  @OneToMany((type) => Posts, (post) => post.user) posts!: Posts[];
+  @OneToMany((type) => Posts, (post) => post.user)
+  posts!: Posts[];
 
   @CreateDateColumn()
   createdAt!: Date;
